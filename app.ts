@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import cookieSession from "cookie-session";
 import authRouter from "./controllers/Auth/auth";
-import config from "./utils/config";
 
 const app = express();
 

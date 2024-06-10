@@ -13,13 +13,17 @@ authRouter.get("/logout", (req, res) => {
 
 authRouter.post("/hydrate", async (req, res) => {
   // pull hash out of req
-  const hashedCookie: string = req.body;
-  console.log("cookie in server, right out of request", hashedCookie);
+  const hashedCookie = req.body.cookie;
+
+  //remove session= from the cookie
+  const actualCookie = hashedCookie.slice(8);
+  // decode the uri
+  const decodedCookie = decodeURIComponent(actualCookie);
 
   // try to find a user whose cookieHash matches the encrypted cookie
   const foundUser = await prisma.user.findUnique({
     where: {
-      cookieHash: hashedCookie,
+      cookieHash: decodedCookie,
     },
   });
 
